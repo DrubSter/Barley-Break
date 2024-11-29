@@ -25,5 +25,11 @@ void LiderBoard::GetFile()
 	std::ifstream in;
 	in.open("liderboard.txt");
 	if (in.is_open()) {
+		char* txt = new char[20];
+		int nums;
+		while (in >> txt >> nums)
+		{
+
+		}
 	}
 }

@@ -3,7 +3,7 @@
 Game::Game()
 {
 	// Подгружаем шрифт для отрисовки элементов
-	font.loadFromFile("calibri.ttf");
+	font.loadFromFile("font/troika.otf");
 	Init();
 }
 
