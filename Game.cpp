@@ -54,11 +54,11 @@ void Game::Move(Direction direction)
 void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();
-	sf::Color color = sf::Color(200, 100, 200);
+	sf::Color color = sf::Color(205, 87, 0);
 
 	// Рисуем рамку игрового поля
 	sf::RectangleShape shape(sf::Vector2f(FIELD_SIZE, FIELD_SIZE));
-	shape.setOutlineThickness(2.f);
+	shape.setOutlineThickness(5);
 	shape.setOutlineColor(color);
 	shape.setFillColor(sf::Color::Transparent);
 	target.draw(shape, states);
@@ -67,7 +67,7 @@ void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	shape.setSize(sf::Vector2f(CELL_SIZE - 2, CELL_SIZE - 2));
 	shape.setOutlineThickness(2.f);
 	shape.setOutlineColor(color);
-	shape.setFillColor(sf::Color::Transparent);
+	shape.setFillColor(sf::Color(0,128,255));
 
 	// Подготавливаем текстовую заготовку для отрисовки номеров плашек
 	sf::Text text("", font, 52);

@@ -1,16 +1,17 @@
 #include <SFML/Graphics.hpp>
+#include "LiderBoard.h"
 #include "GameMenu.h"
 #include "Game.h"
 using namespace sf;
 RenderWindow window;
 void GamеStart();
-
+void LiderWindows();
 int main()
 {
     // Создаём окно windows
     // Параметры: размер окна установить согласно текущему разрешению экрана
     // название моя игра, развернуть графическое окно на весь размер экрана
-    window.create(VideoMode(600,600), L"Моя игра");
+    window.create(VideoMode(600,600), L"Моя игра",Style::Titlebar);
     
     // Создаём прямоугольник
     RectangleShape background(Vector2f(600, 600));
@@ -50,7 +51,7 @@ int main()
                     switch (mymenu.getSelectedMenuNumber())
                     {
                     case 0:window.setVisible(false); GamеStart();  break;
-                    //case 1:About_Game();  break;
+                    case 1:window.setVisible(false); LiderWindows(); break;
                     case 2:window.close(); break;
                     }
 
@@ -67,11 +68,45 @@ int main()
 
 	return 0;
 }
+void LiderWindows()
+{
+    RenderWindow Lwindow(VideoMode(600,600),"Leaders", Style::Titlebar);
 
+    RectangleShape background(Vector2f(600, 600));
+    Texture texture_window;
+    texture_window.loadFromFile("image/game.png");
+    background.setTexture(&texture_window);
+
+    Font font;
+    font.loadFromFile("font/troika.otf");
+
+    // Текст с обозначением клавиш
+    Text text("Leader-board", font, 40);
+    text.setFillColor(Color::Cyan);
+    text.setPosition(200, 5);
+
+    Event event;
+    while (Lwindow.isOpen())
+    {
+        while (Lwindow.pollEvent(event))
+        {
+            if (event.type == Event::Closed) { Lwindow.close(); window.setVisible(true); }
+            if (event.type == Event::KeyPressed)
+            {                
+                if (event.key.code == Keyboard::Escape) { Lwindow.close(); window.setVisible(true); }
+            }
+        }
+                
+        Lwindow.clear();
+        Lwindow.draw(background);
+        Lwindow.draw(text);
+        Lwindow.display();
+    }
+}
 void GamеStart()
 {
     // Создаем окно размером 600 на 600 и частотой обновления 60 кадров в секунду
-    RenderWindow gwindow(VideoMode(600, 600), "15");
+    RenderWindow gwindow(VideoMode(600, 600), "15", Style::Titlebar);
     gwindow.setFramerateLimit(60);
 
     RectangleShape background(Vector2f(600, 600));
@@ -81,10 +116,10 @@ void GamеStart()
     background.setTexture(&texture_window);
 
     Font font;
-    font.loadFromFile("calibri.ttf");
+    font.loadFromFile("font/troika.otf");
 
     // Текст с обозначением клавиш
-    Text text("F2 - New Game / Esc - Exit / Arrow Keys - Move Tile", font, 20);
+    Text text("Esc - Exit / Arrow Keys - Move Tile", font, 40);
     text.setFillColor(Color::Cyan);
     text.setPosition(5.f, 5.f);
 
@@ -94,6 +129,9 @@ void GamеStart()
 
     Event event;
     int move_counter = 0;	// Счетчик случайных ходов для перемешивания головоломки
+
+    game.Init();
+    move_counter = 100;
 
     while (gwindow.isOpen())
     {
@@ -107,13 +145,7 @@ void GamеStart()
                 if (event.key.code == Keyboard::Left) game.Move(Direction::Left);
                 if (event.key.code == Keyboard::Right) game.Move(Direction::Right);
                 if (event.key.code == Keyboard::Up) game.Move(Direction::Up);
-                if (event.key.code == Keyboard::Down) game.Move(Direction::Down);
-                // Новая игра
-                if (event.key.code == Keyboard::F2)
-                {
-                    game.Init();
-                    move_counter = 100;
-                }
+                if (event.key.code == Keyboard::Down) game.Move(Direction::Down);                
             }
         }
 
