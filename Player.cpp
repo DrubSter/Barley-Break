@@ -1,25 +1,20 @@
 #include "Player.h"
 Player::Player()
 {
-	name = new char[20];
+	name = "";
 	num = 0;
 }
-Player::Player(char* name, int num)
+Player::Player(std::string str, int num)
 {
-	this->name = name;
+	this->name = str;
 	this->num = num;
 }
-Player::~Player()
+void Player::Set(std::string str, int num)
 {
-	delete[] name;
-}
-void Player::Set(char* name, int num)
-{
-	delete[] this->name;
-	this->name = name;
+	this->name = str;
 	this->num = num;
 }
-char* Player::GetName()
+std::string Player::GetName()
 {
 	return name;
 }

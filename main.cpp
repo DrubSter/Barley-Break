@@ -8,6 +8,7 @@ void GamеStart();
 void LiderWindows();
 int main()
 {
+    
     // Создаём окно windows
     // Параметры: размер окна установить согласно текущему разрешению экрана
     // название моя игра, развернуть графическое окно на весь размер экрана
@@ -17,7 +18,7 @@ int main()
     RectangleShape background(Vector2f(600, 600));
     // Загружаем в прямоугольник текстуру с изображением menu9.jpg
     Texture texture_window;
-    if (!texture_window.loadFromFile("image/menu.png")) return 4;/////////////////////////////////////////////////////
+    if (!texture_window.loadFromFile("image/menu.png")) return 4;
     background.setTexture(&texture_window);
 
         
@@ -70,6 +71,9 @@ int main()
 }
 void LiderWindows()
 {
+    LiderBoard leaderBoard;
+    leaderBoard.GetFile();
+
     RenderWindow Lwindow(VideoMode(600,600),"Leaders", Style::Titlebar);
 
     RectangleShape background(Vector2f(600, 600));
@@ -84,6 +88,12 @@ void LiderWindows()
     Text text("Leader-board", font, 40);
     text.setFillColor(Color::Cyan);
     text.setPosition(200, 5);
+
+    Text LeaderText(leaderBoard.TextRetunr() , font, 30);
+    LeaderText.setFillColor(sf::Color(237, 147, 0));
+    LeaderText.setOutlineThickness(2.f);
+    LeaderText.setOutlineColor(sf::Color(205, 87, 0));
+    LeaderText.setPosition(60, 40);
 
     Event event;
     while (Lwindow.isOpen())
@@ -100,6 +110,7 @@ void LiderWindows()
         Lwindow.clear();
         Lwindow.draw(background);
         Lwindow.draw(text);
+        Lwindow.draw(LeaderText);
         Lwindow.display();
     }
 }
@@ -129,7 +140,7 @@ void GamеStart()
 
     Event event;
     int move_counter = 0;	// Счетчик случайных ходов для перемешивания головоломки
-
+    
     game.Init();
     move_counter = 100;
 

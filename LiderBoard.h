@@ -1,14 +1,14 @@
 #pragma once
 #include "Player.h"
+#include <vector>
 #include <fstream>
 class LiderBoard
 {
-	Player* Players;
-	float nums;
+	std::vector<Player> Players;
 public:
-	LiderBoard();
-	~LiderBoard();
-	void PrintFile();
+	void AddPlayer(Player& player);
+	void PrintFile(Player& player);
 	void GetFile();
+	std::string TextRetunr();
 };
 

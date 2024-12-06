@@ -14,7 +14,7 @@ void Game::Init()
 	// Ставим пустую плашку в правую нижнюю позицию
 	empty_index = ARRAY_SIZE - 1;
 	elements[empty_index] = 0;	// Пустая плашка имеет значение = 0
-	solved = true;
+	solved = false;
 }
 
 bool Game::Check()
