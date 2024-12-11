@@ -12,7 +12,7 @@ int main()
     // Создаём окно windows
     // Параметры: размер окна установить согласно текущему разрешению экрана
     // название моя игра, развернуть графическое окно на весь размер экрана
-    window.create(VideoMode(600,600), L"Моя игра",Style::Titlebar);
+    window.create(VideoMode(600,600), L"Моя игра",Style::Close);
     
     // Создаём прямоугольник
     RectangleShape background(Vector2f(600, 600));
