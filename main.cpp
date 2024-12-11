@@ -3,17 +3,12 @@
 #include "GameMenu.h"
 #include "Game.h"
 using namespace sf;
-RenderWindow window;
+RenderWindow window(VideoMode(600, 600), L"Моя игра", Style::Close);
 void GamеStart();
 void LiderWindows();
 int main()
 {
-    
-    // Создаём окно windows
-    // Параметры: размер окна установить согласно текущему разрешению экрана
-    // название моя игра, развернуть графическое окно на весь размер экрана
-    window.create(VideoMode(600,600), L"Моя игра",Style::Close);
-    
+     
     // Создаём прямоугольник
     RectangleShape background(Vector2f(600, 600));
     // Загружаем в прямоугольник текстуру с изображением menu9.jpg
@@ -51,8 +46,8 @@ int main()
                     // Переходим на выбранный пункт меню
                     switch (mymenu.getSelectedMenuNumber())
                     {
-                    case 0:window.setVisible(false); GamеStart();  break;
-                    case 1:window.setVisible(false); LiderWindows(); break;
+                    case 0:/*window.setVisible(false)*/; GamеStart();  break;
+                    case 1:/*window.setVisible(false)*/; LiderWindows(); break;
                     case 2:window.close(); break;
                     }
 
@@ -74,7 +69,7 @@ void LiderWindows()
     LiderBoard leaderBoard;
     leaderBoard.GetFile();
 
-    RenderWindow Lwindow(VideoMode(600,600),"Leaders", Style::Titlebar);
+    window.setTitle("Leaders");
 
     RectangleShape background(Vector2f(600, 600));
     Texture texture_window;
@@ -96,29 +91,29 @@ void LiderWindows()
     LeaderText.setPosition(60, 40);
 
     Event event;
-    while (Lwindow.isOpen())
+    while (window.isOpen())
     {
-        while (Lwindow.pollEvent(event))
+        while (window.pollEvent(event))
         {
-            if (event.type == Event::Closed) { Lwindow.close(); window.setVisible(true); }
+            if (event.type == Event::Closed) { window.close(); }
             if (event.type == Event::KeyPressed)
             {                
-                if (event.key.code == Keyboard::Escape) { Lwindow.close(); window.setVisible(true); }
+                if (event.key.code == Keyboard::Escape) { main();}
             }
         }
                 
-        Lwindow.clear();
-        Lwindow.draw(background);
-        Lwindow.draw(text);
-        Lwindow.draw(LeaderText);
-        Lwindow.display();
+        window.clear();
+        window.draw(background);
+        window.draw(text);
+        window.draw(LeaderText);
+        window.display();
     }
 }
 void GamеStart()
 {
     // Создаем окно размером 600 на 600 и частотой обновления 60 кадров в секунду
-    RenderWindow gwindow(VideoMode(600, 600), "15", Style::Titlebar);
-    gwindow.setFramerateLimit(60);
+    window.setTitle("15");
+    window.setFramerateLimit(60);
 
     RectangleShape background(Vector2f(600, 600));
     // Загружаем в прямоугольник текстуру с изображением menu9.jpg
@@ -144,15 +139,15 @@ void GamеStart()
     game.Init();
     move_counter = 100;
 
-    while (gwindow.isOpen())
+    while (window.isOpen())
     {
-        while (gwindow.pollEvent(event))
+        while (window.pollEvent(event))
         {
-            if (event.type == Event::Closed) { gwindow.close(); window.setVisible(true); }
+            if (event.type == Event::Closed) { window.close();}
             if (event.type == Event::KeyPressed)
             {
                 // Получаем нажатую клавишу - выполняем соответствующее действие
-                if (event.key.code == Keyboard::Escape) {gwindow.close(); window.setVisible(true);}
+                if (event.key.code == Keyboard::Escape) {main();}
                 if (event.key.code == Keyboard::Left) game.Move(Direction::Left);
                 if (event.key.code == Keyboard::Right) game.Move(Direction::Right);
                 if (event.key.code == Keyboard::Up) game.Move(Direction::Up);
@@ -164,10 +159,10 @@ void GamеStart()
         if (move_counter-- > 0) game.Move((Direction)(rand() % 4));
 
         // Выполняем необходимые действия по отрисовке
-        gwindow.clear();
-        gwindow.draw(background);
-        gwindow.draw(game);
-        gwindow.draw(text);
-        gwindow.display();
+        window.clear();
+        window.draw(background);
+        window.draw(game);
+        window.draw(text);
+        window.display();
     }
 }
